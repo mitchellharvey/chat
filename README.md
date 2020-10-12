@@ -76,9 +76,9 @@ There is a script provided that will download the latest schema file from the dg
 ./init_db.sh
 ```
 
-You if you aren't using the default connection information set in the `docker-compose.yml` file for the root database password, or those setup in `main.go` for the default settings.cfg then you may want to edit this script with your values.
+If you aren't using the default connection information set in the `docker-compose.yml` file for the root database password, or those setup in `main.go` for the default settings.cfg then you may want to edit this script with your values.
 
-WARNING: If you run this script again, it will always wipe and recreate the database, you should only need to do this once unless you specifically want to wipe your database
+**WARNING:** If you run this script again, it will always wipe and recreate the database, you should only need to do this once unless you specifically want to wipe your database
 
 
 **Turn off containers**
@@ -107,6 +107,20 @@ docker-compose logs -f
 docker-compose logs -f chat
 ```
 
+**Execute command on a container**
+Sometimes you may want to execute a command on a container, like running the mysql client to connect to the db.
+
+The following command will launch the mysql client within the context of the mysql container (the full container name created by docker-compose) as the root user prompted for password.
+
+```
+docker exec -it dggchat_mysql_1 mysql -u root -p
+```
+
+Sometimes for debugging purposes you may want to pop a shell in a container to see what the filesystem looks like relative to the container (does it see my new files?, ect.)
+
+```
+docker exec -it dggchat_chat_1 /bin/bash
+```
 
 #### Rebuilding Chat Code
 
