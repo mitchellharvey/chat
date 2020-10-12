@@ -13,8 +13,8 @@ DOCKER_DB_VOLUME=.database
 
 # Change ownership of database volume to current user.  This is obnoxious but docker and docker-compose don't expose
 # a dynamic way to set ownership on volumes cleanly
-user=$(id -u):$(id -g)
-sudo chown -R $user "$SCRIPT_DIR"/../$DOCKER_DB_VOLUME
+#user=$(id -u):$(id -g)
+#sudo chown -R $user "$SCRIPT_DIR"/../$DOCKER_DB_VOLUME
 
 # Create manual database setup and combine with downloaded schema file to initialize our database
 DOWNLOADED_SCHEMA=$(curl -L https://github.com/destinygg/website/raw/master/config/destiny.gg.sql --silent)
