@@ -68,17 +68,15 @@ This will do any container building neccesary and start the containers in a deta
 
 **Setup Database**
 
-Initially after a docker-compose build the MySQL and Redis databases will be cleared, meaning you'll need to reinitailize MySQL with the correct database, user and schema
+Initially after a docker-compose build the MySQL and Redis databases will be cleared, meaning you'll need to reinitailize MySQL with the correct schema and fix up permissions on locally mounted volume
 
 There is a script provided that will download the latest schema file from the dggwebsite source code and setup a new database using that schema.
 
 ```
-./init_db.sh
+./scripts/init_db.sh
 ```
 
-If you aren't using the default connection information set in the `docker-compose.yml` file for the root database password, or those setup in `main.go` for the default settings.cfg then you may want to edit this script with your values.
-
-**WARNING:** If you run this script again, it will always wipe and recreate the database, you should only need to do this once unless you specifically want to wipe your database
+If you aren't using the default connection information set in the `docker-compose.yml` file for the database username/password, or those setup in `main.go` for the default settings.cfg then you may want to edit this script with your values.
 
 
 **Turn off containers**
@@ -89,7 +87,11 @@ If you don't want your docker containers constantly running, you can always brin
 docker-compose down
 ```
 
-Your database will persist between containers starts and shutdowns but if you rebuild then you will have to reinitailize the database.
+Your database will persist between containers starts and shutdowns.  If you want a fresh database, you can delete the local volume it's mounted to which by default is:
+
+```
+PROJECT_FOLDER/.database
+```
 
 #### Monitoring Services
 
@@ -108,6 +110,7 @@ docker-compose logs -f chat
 ```
 
 **Execute command on a container**
+
 Sometimes you may want to execute a command on a container, like running the mysql client to connect to the db.
 
 The following command will launch the mysql client within the context of the mysql container (the full container name created by docker-compose) as the root user prompted for password.
