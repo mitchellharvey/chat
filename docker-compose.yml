@@ -1,0 +1,36 @@
+version: "3"
+services:
+    chat:
+        image: chat
+        working_dir: /dggchat
+        build:
+            context: ./
+            dockerfile: Dockerfile-chat
+        ports:
+            - "5000:5000"
+        depends_on:
+            - mysql 
+            - redis
+        volumes:
+          - .:/dggchat
+
+        command: bash -c "
+                go mod download &&
+                go mod verify &&
+                go build -o chat &&
+                ./chat
+            "
+    mysql: 
+        image: mysql/mysql-server:8.0
+        environment:
+            MYSQL_ROOT_PASSWORD: dbpassword
+        volumes:
+            - ./.database:/var/lib/mysql
+        ports:
+            - "3306:3306"
+
+    redis:
+        image: redis:latest
+        ports:
+            - "6379:6379"
+

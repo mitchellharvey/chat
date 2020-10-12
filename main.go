@@ -69,13 +69,13 @@ func main() {
 		nc.AddOption("default", "maxthrottletime", fmt.Sprintf("%d", 5*time.Minute))
 
 		nc.AddSection("redis")
-		nc.AddOption("redis", "address", "localhost:6379")
+		nc.AddOption("redis", "address", "redis:6379")
 		nc.AddOption("redis", "database", "0")
 		nc.AddOption("redis", "password", "")
 
 		nc.AddSection("database")
 		nc.AddOption("database", "type", "mysql")
-		nc.AddOption("database", "dsn", "username:password@tcp(localhost:3306)/destinygg?loc=UTC&parseTime=true&timeout=1s&time_zone=\"+00:00\"")
+		nc.AddOption("database", "dsn", "dgguser:dggpassword@tcp(mysql:3306)/destinygg?loc=UTC&parseTime=true&timeout=1s&time_zone=\"+00:00\"")
 
 		nc.AddSection("api")
 		nc.AddOption("api", "url", "http://www.destiny.gg/api")

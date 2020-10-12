@@ -1,0 +1,17 @@
+FROM golang:1.15
+
+ENV PROJECT_ROOT /dggchat
+WORKDIR $PROJECT_ROOT
+
+COPY . .
+
+RUN go get -d -v ./...
+RUN go install -v ./...
+
+RUN go mod download
+RUN go mod verify
+RUN go build -o chat
+
+EXPOSE 9998
+
+CMD ["chat"]
